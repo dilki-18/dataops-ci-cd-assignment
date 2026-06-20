@@ -1,0 +1,7 @@
+venv/
+_pytest_cache_/
+.pytest_cache/
+
+data/processed/
+
+*.pyc
