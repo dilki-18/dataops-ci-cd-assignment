@@ -1,59 +1,74 @@
 # DataOps CI/CD Assignment
 
-This repository contains a simple ETL pipeline for cleaning customer data, along with Docker and test support.
+This repository demonstrates a simple Python ETL pipeline for cleaning customer data, with Docker support and a small validation test.
 
 ## Repository Structure
 
-- `src/etl.py` - ETL script that reads `data/customers.csv`, drops rows with missing values, and writes the cleaned output to `data/processed/cleaned_customers.csv`.
-- `data/customers.csv` - raw customer dataset.
-- `data/processed/` - output directory for processed data.
-- `requirements.txt` - Python dependencies for the ETL pipeline.
-- `Dockerfile` - container definition for running the ETL pipeline in Docker.
-- `tests/test_elt.py` - basic validation to ensure the cleaned CSV has no null values.
-- `terraform/` - infrastructure-related files for demonstration.
+- `src/etl.py` - ETL script that reads `data/customers.csv`, drops rows with missing values, and writes cleaned output to `data/processed/cleaned_customers.csv`.
+- `data/customers.csv` - raw customer dataset used as the ETL input.
+- `data/processed/` - output directory for the cleaned dataset.
+- `requirements.txt` - Python dependencies for the ETL pipeline and tests.
+- `Dockerfile` - container definition for running the pipeline in Docker.
+- `tests/test_elt.py` - test that verifies the cleaned dataset contains no null values.
+- `terraform/` - infrastructure demonstration files.
 
 ## Requirements
 
-- Python 3.12+ (Dockerfile uses `python:3.12.4-slim`)
-- `pandas`
+- Python 3.12+
+- `pip`
+- `docker` (optional, for containerized execution)
+
+Dependencies are listed in `requirements.txt`, including `pandas` and `pytest`.
 
 ## Setup
 
-1. Create and activate a virtual environment:
+1. Create and activate a Python virtual environment:
 
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-2. Install dependencies:
+2. Install Python dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Run the ETL pipeline
+## Running the ETL pipeline
+
+From the repository root, run:
 
 ```bash
 python src/etl.py
 ```
 
-The script reads `data/customers.csv` and writes cleaned data to `data/processed/cleaned_customers.csv`.
+This reads the raw input file at `data/customers.csv`, removes any rows with missing values, and writes the cleaned file to `data/processed/cleaned_customers.csv`.
 
-## Run tests
+## Running tests
+
+Run the validation test with:
 
 ```bash
-pytest
+pytest tests/test_elt.py
 ```
 
-## Run with Docker
+The test checks that the output CSV contains zero null values.
+
+## Running with Docker
+
+Build and run the container:
 
 ```bash
 docker build -t dataops-etl .
 docker run --rm dataops-etl
 ```
 
+The Docker container executes `src/etl.py` by default.
+
 ## Notes
 
-- The current ETL process only removes rows with missing values.
-- Update `src/etl.py` to extend transformation logic or add validation steps.
+- The current ETL process only performs null-value removal as the transformation step.
+- To extend the pipeline, update `src/etl.py` with additional transformation or validation logic.
+- Ensure `data/customers.csv` is present before running the pipeline.
+Trigger workflow run
