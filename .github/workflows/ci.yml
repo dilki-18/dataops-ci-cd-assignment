@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Checkout code
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
 
     - name: Setup Python 
       uses: actions/setup-python@v2
@@ -23,10 +23,10 @@ jobs:
       run: |
         pip install -r requirements.txt
 
-    -name: Run ETL
+    - name: Run ETL
       run: |
         python src/etl.py
 
     - name: Run tests
       run: |
-        pytest tests/
+        pytest tests
